@@ -1,0 +1,54 @@
+.carousel {
+  display: flex;
+  flex-direction: column;
+  /* display: grid; */
+  /* grid-template-rows: 1fr 2fr 1fr;
+  grid-template-columns: 1fr; */
+  justify-content: stretch;
+  height: 500px;
+  overflow: hidden;
+  justify-content: space-around;
+}
+.carouselItem {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+.carouselItem.inactive {
+  height: 0%;
+  visibility: hidden;
+  /* display: none; */
+}
+.carouselItem:first-child.active {
+  margin-top: 110px;
+}
+.carouselItem:last-child.active {
+  margin-bottom: 110px;
+}
+.carouselItem.active {
+  grid-row-start: 2;
+  height: 300px;
+  margin-block: 10px;
+}
+.carouselItem.beforeActive {
+  grid-row-start: 1;
+  height: 100px;
+  margin-block: 10px;
+}
+.carouselItem.afterActive {
+  grid-row-start: 3;
+  height: 100px;
+  margin-block: 10px;
+}
+.card {
+  height: 100%;
+  width: 100%;
+  background: red;
+}
+
+.cardItem {
+  height: 100%;
+  aspect-ratio: 2/1;
+  background-color: red;
+}
