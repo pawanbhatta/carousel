@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 const imgs = [
@@ -12,25 +12,24 @@ const imgs = [
 ];
 
 const ONE_SECOND = 1000;
-const AUTO_DELAY = ONE_SECOND * 5;
+const AUTO_DELAY = ONE_SECOND * 10;
 const DRAG_BUFFER = 50;
 
 const SPRING_OPTIONS = {
   type: "spring",
-  mass: 3,
-  stiffness: 400,
+  mass: 5,
+  stiffness: 500,
   damping: 50,
 };
 
 export const SwipeCarousel = () => {
-  const [imgIndex, setImgIndex] = useState(0);
+  const [imgIndex, setImgIndex] = useState(1);
 
   const dragX = useMotionValue(0);
 
   useEffect(() => {
     const intervalRef = setInterval(() => {
       const x = dragX.get();
-
       if (x === 0) {
         setImgIndex((pv) => {
           if (pv === imgs.length - 1) {
@@ -49,13 +48,19 @@ export const SwipeCarousel = () => {
 
     if (x <= -DRAG_BUFFER && imgIndex < imgs.length - 1) {
       setImgIndex((pv) => pv + 1);
+    } else if (x >= DRAG_BUFFER && imgIndex === 1) {
+      setImgIndex(imgs.length - 1);
     } else if (x >= DRAG_BUFFER && imgIndex > 0) {
       setImgIndex((pv) => pv - 1);
+    } else if (x >= DRAG_BUFFER && imgIndex === 0) {
+      setImgIndex(imgs.length - 1);
+    } else {
+      setImgIndex(1);
     }
   };
 
   return (
-    <div className="relative h-screen overflow-hidden bg-neutral-950 py-8">
+    <div className="relative h-screen overflow-hidden bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-0">
       <motion.div
         drag="y"
         dragConstraints={{
@@ -66,14 +71,15 @@ export const SwipeCarousel = () => {
           y: dragX,
         }}
         animate={{
-          translateY: `-${imgIndex * 10}%`,
-          // translateY: `-${imgIndex * 100}%`,
+          translateY: `-${
+            imgIndex === 0 ? (imgs.length - 2) * 400 : (imgIndex - 1) * 400
+          }px`,
         }}
         transition={SPRING_OPTIONS}
         onDragEnd={onDragEnd}
-        className="flex bg-purple-300 cursor-grab items-center justify-center active:cursor-grabbing"
+        className="flex cursor-grab items-center justify-center active:cursor-grabbing"
       >
-        <Images imgIndex={imgIndex} />
+        <Images imgIndex={imgIndex} setImgIndex={setImgIndex} />
       </motion.div>
 
       <Dots imgIndex={imgIndex} setImgIndex={setImgIndex} />
@@ -82,10 +88,16 @@ export const SwipeCarousel = () => {
   );
 };
 
-const Images = ({ imgIndex }: { imgIndex: number }) => {
+const Images = ({
+  imgIndex,
+  setImgIndex,
+}: {
+  imgIndex: number;
+  setImgIndex: Dispatch<SetStateAction<number>>;
+}) => {
   return (
     <div
-      className="flex-col bg-red-200 w-screen items-center justify-center"
+      className="flex-col bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-screen items-center justify-center"
       style={{
         display: "flex",
         alignItems: "center",
@@ -97,18 +109,23 @@ const Images = ({ imgIndex }: { imgIndex: number }) => {
           <motion.div
             key={idx}
             style={{
-              backgroundImage: `url(${imgSrc})`,
+              // backgroundImage: `url(${imgSrc})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               height: "400px",
               width: "400px",
             }}
             animate={{
-              scale: imgIndex === idx ? 0.95 : 0.65,
+              scale: imgIndex === idx || imgIndex === imgs.length ? 0.95 : 0.65,
             }}
             transition={SPRING_OPTIONS}
-            className="aspect-video shrink-0 rounded-xl bg-neutral-800 object-cover"
-          />
+            className="aspect-video shrink-0 rounded-xl bg-neutral-800 object-cover text-yellow-100 flex items-center justify-center font-extrabold text-3xl"
+            onClick={() =>
+              idx === 0 ? setImgIndex(imgs.length - 1) : setImgIndex(idx)
+            }
+          >
+            {idx + 1}
+          </motion.div>
         );
       })}
     </div>
