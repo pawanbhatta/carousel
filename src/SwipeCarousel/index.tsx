@@ -104,7 +104,7 @@ const Images = ({
         justifyContent: "center",
       }}
     >
-      {imgs.map((imgSrc, idx) => {
+      {imgs.map((_, idx) => {
         return (
           <motion.div
             key={idx}
