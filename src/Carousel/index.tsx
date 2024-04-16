@@ -8,7 +8,7 @@ function Card() {
   return <div className={styles.cardItem}></div>;
 }
 
-export function Carousel(props: ICarouselProps) {
+export default function Carousel(props: ICarouselProps) {
   const vCarousel = React.useRef<HTMLDivElement | null>(null);
   const carouselItems = ["a", "b", "c", "d", "e", "f", "g"];
   const [active, setActive] = React.useState(0);

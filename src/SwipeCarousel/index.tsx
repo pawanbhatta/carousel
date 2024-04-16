@@ -1,15 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
-const imgs = [
-  "/src/assets/KarkhanaFeature.jpg",
-  "/src/assets/KarkhanaFeature.jpg",
-  "/src/assets/KarkhanaFeature.jpg",
-  "/src/assets/KarkhanaFeature.jpg",
-  "/src/assets/KarkhanaFeature.jpg",
-  "/src/assets/KarkhanaFeature.jpg",
-  "/src/assets/KarkhanaFeature.jpg",
-];
+const imgs = ["a", "b", "c", "d", "e", "f"];
 
 const ONE_SECOND = 1000;
 const AUTO_DELAY = ONE_SECOND * 1000;
@@ -22,7 +14,7 @@ const SPRING_OPTIONS = {
   damping: 50,
 };
 
-export const SwipeCarousel = () => {
+const SwipeCarousel = () => {
   const [imgIndex, setImgIndex] = useState(1);
 
   const dragX = useMotionValue(0);
@@ -81,9 +73,6 @@ export const SwipeCarousel = () => {
       >
         <Images imgIndex={imgIndex} setImgIndex={setImgIndex} />
       </motion.div>
-
-      <Dots imgIndex={imgIndex} setImgIndex={setImgIndex} />
-      <GradientEdges />
     </div>
   );
 };
@@ -132,35 +121,4 @@ const Images = ({
   );
 };
 
-const Dots = ({
-  imgIndex,
-  setImgIndex,
-}: {
-  imgIndex: number;
-  setImgIndex: Dispatch<SetStateAction<number>>;
-}) => {
-  return (
-    <div className="mt-4 flex w-full justify-center gap-2">
-      {imgs.map((_, idx) => {
-        return (
-          <button
-            key={idx}
-            onClick={() => setImgIndex(idx)}
-            className={`h-3 w-3 rounded-full transition-colors ${
-              idx === imgIndex ? "bg-neutral-50" : "bg-neutral-500"
-            }`}
-          />
-        );
-      })}
-    </div>
-  );
-};
-
-const GradientEdges = () => {
-  return (
-    <>
-      <div className="pointer-events-none absolute bottom-0 left-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-r from-neutral-950/50 to-neutral-950/0" />
-      <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-l from-neutral-950/50 to-neutral-950/0" />
-    </>
-  );
-};
+export default SwipeCarousel;
