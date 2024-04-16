@@ -1,5 +1,5 @@
 {
-  "name": "simple-react-app",
+  "name": "vite-test-carousel",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -32,5 +32,16 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pawanbhatta/carousel"
+  },
+  "keywords": [],
+  "author": "Pawan Bhatta",
+  "bugs": {
+    "url": "https://github.com/pawanbhatta/carousel"
+  },
+  "homepage": "https://github.com/pawanbhatta/carousel",
+  "license": "MIT"
 }
